@@ -46,25 +46,22 @@ function Navbar() {
             className="shadow dropdown-content z-[1] bg-white rounded-box w-[90px] md:w-[130px] lg:w-[180px] text-left  
           text-sm md:text-[17px] py-4"
           >
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519] ">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519] ">
               <a>Home</a>
             </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519]">
               <a>Details</a>
             </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519]">
               <a>Category</a>
             </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
-              <a>Category</a>
-            </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519]">
               <a>My Favorites</a>
             </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519]">
               <a>Profile</a>
             </li>
-            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-0.5 cursor-pointer hover:text-[#fb6519]">
+            <li className="hover:bg-[#e7e9ec] px-3 md:px-4 py-1 cursor-pointer hover:text-[#fb6519]">
               <a>Log In/Sign Up</a>
             </li>
           </ul>
