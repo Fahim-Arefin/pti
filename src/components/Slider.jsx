@@ -6,6 +6,8 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "../style.css";
 import { Autoplay } from "swiper/modules";
+import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Slider({
   data,
@@ -13,8 +15,16 @@ export default function Slider({
   forwarArrowdId,
   backArrowId,
   className,
+  modalRef,
+  handleAddItem,
 }) {
   const swiperRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const swiper = swiperRef.current.swiper;
@@ -53,12 +63,52 @@ export default function Slider({
     };
   }, [backArrowId, forwarArrowdId]);
 
+  const handleAdd = () => {
+    modalRef.current.showModal();
+    console.log(modalRef.current);
+  };
+
+  const onSubmit = (formData) => {
+    // console.log(formData);
+    let data;
+    if (!formData.isPopular) {
+      let rec = formData.isRecommended === "true" ? true : false;
+      data = {
+        Id: uuidv4(),
+        ImageUrl: formData.imageUrl,
+        IsPopular: true,
+        IsRecommended: rec,
+        Name: formData.name,
+        Price: parseFloat(formData.price),
+      };
+    } else {
+      let pop = formData.isPopular === "true" ? true : false;
+      data = {
+        Id: uuidv4(),
+        ImageUrl: formData.imageUrl,
+        IsPopular: pop,
+        IsRecommended: true,
+        Name: formData.name,
+        Price: parseFloat(formData.price),
+      };
+    }
+    // console.log(data);
+    modalRef.current.close();
+    reset();
+    handleAddItem(data);
+  };
+
   return (
     <div className={`mx-3 md:mx-10 lg:mx-16 xl:mx-36 xlll:mx-48 ${className}`}>
       <div className="flex justify-between text-sm md:text-xl font-bold md:font-medium mb-3 md:mb-5 md:pr-5">
         <h1 className="text-[#132131] ">{header}</h1>
         <div className="flex items-center space-x-4 ">
-          <div className="text-[#f97d3e] hover:cursor-pointer">AddMore</div>
+          <div
+            onClick={handleAdd}
+            className="text-[#f97d3e] hover:cursor-pointer"
+          >
+            AddMore
+          </div>
           <div className="flex ">
             <MdArrowBackIos
               id={backArrowId}
@@ -124,6 +174,185 @@ export default function Slider({
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Modal */}
+      <dialog ref={modalRef} className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          {/* FORM */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* image */}
+            <div className="mb-4">
+              <label
+                htmlFor="imageUrl"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Image URL
+              </label>
+              <input
+                type="text"
+                id="imageUrl"
+                name="imageUrl"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                {...register("imageUrl", {
+                  required: true,
+                })}
+              />
+              {errors?.imageUrl?.type === "required" && (
+                <div className="flex space-x-2 items-center mt-2">
+                  <div className="w-5 h-5">
+                    <img
+                      className="h-full w-full"
+                      src="https://img.icons8.com/pastel-glyph/64/FA5252/error--v2.png"
+                      alt="error--v2"
+                    />
+                  </div>
+                  <p className="text-[#FA5252] mt-1 text-sm ">
+                    imageUrl is required
+                  </p>
+                </div>
+              )}
+            </div>
+            {/* popular */}
+            <div className="mb-4">
+              <label
+                htmlFor="isPopular"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Is Popular
+              </label>
+              <select
+                id="isPopular"
+                name="isPopular"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                disabled={header === "Popular"}
+                {...register("isPopular")}
+                required
+              >
+                <option value="">Select a value</option>
+                <option selected={header === "Popular"} value="true">
+                  True
+                </option>
+                <option value="false">False</option>
+              </select>
+            </div>
+            {/* recommended */}
+            <div className="mb-4">
+              <label
+                htmlFor="isRecommended"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Is Recommended
+              </label>
+              <select
+                id="isRecommended"
+                name="isRecommended"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                disabled={header === "Recommended"}
+                {...register("isRecommended")}
+                required
+              >
+                <option value="">Select a value</option>
+                <option selected={header === "Recommended"} value="true">
+                  True
+                </option>
+                <option value="false">False</option>
+              </select>
+            </div>
+            {/* name */}
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                {...register("name", {
+                  required: true,
+                })}
+              />
+              {errors?.name?.type === "required" && (
+                <div className="flex space-x-2 items-center mt-2">
+                  <div className="w-5 h-5">
+                    <img
+                      className="h-full w-full"
+                      src="https://img.icons8.com/pastel-glyph/64/FA5252/error--v2.png"
+                      alt="error--v2"
+                    />
+                  </div>
+                  <p className="text-[#FA5252] mt-1 text-sm ">
+                    name is required
+                  </p>
+                </div>
+              )}
+            </div>
+            {/* price */}
+            <div className="mb-4">
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Price
+              </label>
+              <input
+                type="text"
+                id="price"
+                name="price"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                {...register("price", {
+                  required: true,
+                  pattern: {
+                    value: /^\d+(\.\d{1,2})?$/, // Allow positive float numbers with up to 2 decimal places
+                    message:
+                      "Only allows positive float numbers with up to 2 decimal places ",
+                  },
+                })}
+              />
+              {errors?.price?.type === "required" && (
+                <div className="flex space-x-2 items-center mt-2">
+                  <div className="w-5 h-5">
+                    <img
+                      className="h-full w-full"
+                      src="https://img.icons8.com/pastel-glyph/64/FA5252/error--v2.png"
+                      alt="error--v2"
+                    />
+                  </div>
+                  <p className="text-[#FA5252] mt-1 text-sm ">
+                    Price is required
+                  </p>
+                </div>
+              )}
+              {errors?.price?.type === "pattern" && (
+                <div className="flex space-x-2 items-center mt-2">
+                  <div className="w-5 h-5">
+                    <img
+                      className="h-full w-full"
+                      src="https://img.icons8.com/pastel-glyph/64/FA5252/error--v2.png"
+                      alt="error--v2"
+                    />
+                  </div>
+                  <p className="text-[#FA5252] mt-1 text-sm ">
+                    {errors.price.message}
+                  </p>
+                </div>
+              )}
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
 }

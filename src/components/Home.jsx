@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Banner from "./Banner";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Slider from "./Slider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
   const [data, setData] = useState([]);
   const [popularData, setPopular] = useState([]);
   const [recommendedData, setRecommendedData] = useState([]);
+  const popularModalRef = useRef(null);
+  const recommendedModalRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +33,21 @@ function Home() {
     }
   }, [data]);
 
+  const handleAddItem = (item) => {
+    console.log("parent data", item);
+    setData([...data, item]);
+    toast.success("Item Added Successfully!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   console.log("All", data);
   console.log("Popular", popularData);
   console.log("rec", recommendedData);
@@ -44,6 +63,8 @@ function Home() {
           forwarArrowdId="popularForward"
           backArrowId="popularBackward"
           className=""
+          modalRef={popularModalRef}
+          handleAddItem={handleAddItem}
         />
         <Slider
           data={recommendedData}
@@ -51,9 +72,23 @@ function Home() {
           forwarArrowdId="recommendedForward"
           backArrowId="recommendedBackward"
           className="mt-6 md:mt-12 lg:mt-44"
+          modalRef={recommendedModalRef}
+          handleAddItem={handleAddItem}
         />
       </div>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }
