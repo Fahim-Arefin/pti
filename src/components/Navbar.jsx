@@ -6,7 +6,7 @@ function Navbar() {
   const [clicked, setClicked] = useState(true);
 
   return (
-    <div className=" grid grid-cols-12 text-center py-6">
+    <div className="xl:mx-16 grid grid-cols-12 text-center py-6">
       <h1 className=" flex items-center justify-center mt-1.5 col-span-3 md:col-span-2 text-3xl md:text-4xl font-extrabold text-[#221314]">
         pti.
       </h1>

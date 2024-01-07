@@ -1,7 +1,7 @@
 function Banner() {
   // md:mx-10 lg:mx-16 xl:mx-24 xlll:mx-32
   return (
-    <div className=" lg:bg-[#f99f1c] mt-6 lg:mt-24 md:mx-10 lg:mx-16 xl:mx-24 xlll:mx-32 rounded-[40px]">
+    <div className=" lg:bg-[#f99f1c] mt-6 lg:mt-24 md:mx-10 lg:mx-16 xl:mx-36 xlll:mx-48 rounded-[40px]">
       {/* main div */}
       <div className="grid grid-col-1 lg:grid-cols-12 lg:h-[325px] xlll:h-[405px]">
         {/* headline */}
