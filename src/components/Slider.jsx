@@ -7,7 +7,13 @@ import "swiper/css/pagination";
 import "../style.css";
 import { Autoplay } from "swiper/modules";
 
-export default function Slider({ data, header, forwarArrowdId, backArrowId }) {
+export default function Slider({
+  data,
+  header,
+  forwarArrowdId,
+  backArrowId,
+  className,
+}) {
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -48,8 +54,8 @@ export default function Slider({ data, header, forwarArrowdId, backArrowId }) {
   }, [backArrowId, forwarArrowdId]);
 
   return (
-    <div className="mt-24 mx-3 lg:my-44 md:mx-10 lg:mx-16 xl:mx-36 xlll:mx-48">
-      <div className="flex justify-between text-xl font-bold md:font-medium mb-5 md:pr-5">
+    <div className={`mx-3 md:mx-10 lg:mx-16 xl:mx-36 xlll:mx-48 ${className}`}>
+      <div className="flex justify-between text-sm md:text-xl font-bold md:font-medium mb-3 md:mb-5 md:pr-5">
         <h1 className="text-[#132131] ">{header}</h1>
         <div className="flex items-center space-x-4 ">
           <div className="text-[#f97d3e] hover:cursor-pointer">AddMore</div>
@@ -109,10 +115,12 @@ export default function Slider({ data, header, forwarArrowdId, backArrowId }) {
                 }}
                 className="w-full h-full rounded-xl "
                 src={item.ImageUrl}
-                alt=""
+                alt="images"
               />
             </div>
-            <div className="mt-3 text-[#4d5c6d] font-medium">{item.Name}</div>
+            <div className="mt-3 text-[#4d5c6d] text-sm md:text-xl font-medium">
+              {item.Name}
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

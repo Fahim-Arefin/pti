@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Banner from "./Banner";
-// import Footer from "./Footer";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Slider from "./Slider";
@@ -37,19 +37,23 @@ function Home() {
     <div>
       <Navbar />
       <Banner />
-      <Slider
-        data={popularData}
-        header="Popular"
-        forwarArrowdId="popularForward"
-        backArrowId="popularBackward"
-      />
-      <Slider
-        data={recommendedData}
-        header="Recommended"
-        forwarArrowdId="recommendedForward"
-        backArrowId="recommendedBackward"
-      />
-      {/* <Footer /> */}
+      <div className="mt-44">
+        <Slider
+          data={popularData}
+          header="Popular"
+          forwarArrowdId="popularForward"
+          backArrowId="popularBackward"
+          className=""
+        />
+        <Slider
+          data={recommendedData}
+          header="Recommended"
+          forwarArrowdId="recommendedForward"
+          backArrowId="recommendedBackward"
+          className="mt-6 md:mt-12 lg:mt-44"
+        />
+      </div>
+      <Footer />
     </div>
   );
 }
