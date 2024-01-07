@@ -8,6 +8,7 @@ import "../style.css";
 import { Autoplay } from "swiper/modules";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import DataNotFound from "./DataNotFound";
 
 export default function Slider({
   data,
@@ -153,26 +154,28 @@ export default function Slider({
           },
         }}
       >
-        {data.map((item) => (
-          <SwiperSlide key={item.Id} className={` flex flex-col`}>
-            <div className="h-[200px] md:h-[300px] lg:h-[400px] w-full rounded-xl">
-              <img
-                style={{
-                  //   boxShadow: "black 1px 4px 6px",
-                  //   boxShadow: "5px 5px 10px -2px black",
-                  boxShadow:
-                    " rgba(0, 0, 0, 0.16) 0px 0px 0px, black 0px 5px 6px",
-                }}
-                className="w-full h-full rounded-xl "
-                src={item.ImageUrl}
-                alt="images"
-              />
-            </div>
-            <div className="mt-3 text-[#4d5c6d] text-sm md:text-xl font-medium">
-              {item.Name}
-            </div>
-          </SwiperSlide>
-        ))}
+        {data.length === 0 && <DataNotFound />}
+        {data.length > 0 &&
+          data.map((item) => (
+            <SwiperSlide key={item.Id} className={` flex flex-col`}>
+              <div className="h-[200px] md:h-[300px] lg:h-[400px] w-full rounded-xl">
+                <img
+                  style={{
+                    //   boxShadow: "black 1px 4px 6px",
+                    //   boxShadow: "5px 5px 10px -2px black",
+                    boxShadow:
+                      " rgba(0, 0, 0, 0.16) 0px 0px 0px, black 0px 5px 6px",
+                  }}
+                  className="w-full h-full rounded-xl "
+                  src={item.ImageUrl}
+                  alt={item.Name}
+                />
+              </div>
+              <div className="mt-3 text-[#4d5c6d] text-sm md:text-xl font-medium">
+                {item.Name}
+              </div>
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       {/* Modal */}

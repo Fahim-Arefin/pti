@@ -3,9 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home";
+import PageNotFound from "./components/PageNotFound";
 
 const router = createBrowserRouter([
   {
+    errorElement: <PageNotFound />,
     path: "/",
     element: <Home />,
   },
